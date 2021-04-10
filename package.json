@@ -1,0 +1,10 @@
+{
+  "name": "countdownjs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "terminal-kit": "^2.0.7"
+  }
+}
