@@ -77,7 +77,7 @@ async function startCountDown([timerObj, time]) {
         let minutesText = timerObj.minutes < 10 ? `0${timerObj.minutes}` : timerObj.minutes;
         let secondsText = timerObj.seconds < 10 ? `0${timerObj.seconds}` : timerObj.seconds;
         let timerText = `${hoursText} : ${minutesText} : ${secondsText}`;
-        let text = figlet.textSync(timerText, "ANSI Shadow");
+        let text = figlet.textSync(timerText, "Varsity");
         box.setContent(text);
         screen.render();
         await sleep();
