@@ -1,5 +1,5 @@
-const fonts = require("./font");
 let blessed = require("blessed");
+const figlet = require('figlet');
 
 // Create a screen object.
 let screen = blessed.screen({
@@ -13,10 +13,8 @@ let box = blessed.box({
     left: "center",
     width: "100%",
     height: "100%",
-    // padding: "50%",
-    // valign: "middle",
-    // align: "center",
-    // content: "Hello {bold}world{/bold}!",
+    align: "center",
+    valign: "middle",
     tags: true,
     border: {
         type: "line",
@@ -67,21 +65,20 @@ function convertToTimerString(t) {
     let minutes = Math.floor(time / 60);
     let seconds = time - minutes * 60;
 
-    // console.log(hours, "hours",minutes, "min", seconds, "s");
     return [{ hours, minutes, seconds }, t];
 }
 
 const sleep = () => new Promise((res) => setTimeout(res, 1000));
 
 async function startCountDown([timerObj, time]) {
-    // box.setContent(`${timerObj.minutes}m ${timerObj.seconds}s`);
-    // screen.render();
     while (true) {
-        let hourString = timerObj.hours < 10 ? `${fonts["0"].join('\n')} ${fonts[timerObj.hours].join('\n')}` : fonts[timerObj.hours].join('\n');
-        let minuteString = timerObj.minutes < 10 ? `${fonts["0"].join('\n')} ${fonts[timerObj.minutes].join('\n')}` : fonts[timerObj.minutes].join('\n');
-        let secondsString = timerObj.seconds < 10 ? `${fonts["0"].join('\n')} ${fonts[timerObj.seconds].join('\n')}` : fonts[timerObj.seconds].join('\n');
-        let timerString = `${hourString} ${fonts[":"].join('\n')} ${minuteString} ${fonts[":"].join('\n')} ${secondsString}`
-        box.setContent(timerString);
+        // console.log(typeof timerObj.hours);
+        let hoursText = timerObj.hours < 10 ? `0${timerObj.hours}` : timerObj.hours;
+        let minutesText = timerObj.minutes < 10 ? `0${timerObj.minutes}` : timerObj.minutes;
+        let secondsText = timerObj.seconds < 10 ? `0${timerObj.seconds}` : timerObj.seconds;
+        let timerText = `${hoursText} : ${minutesText} : ${secondsText}`;
+        let text = figlet.textSync(timerText, "ANSI Shadow");
+        box.setContent(text);
         screen.render();
         await sleep();
         if (timerObj.seconds >= 0) {
